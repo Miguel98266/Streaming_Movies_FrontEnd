@@ -1,18 +1,22 @@
-
-
-import { Header } from './components'
-import { Home } from './pages/Home'
+import { Header } from "./components";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./routes";
 
 function App() {
-  
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    uri: "http://localhost:3000/",
+  });
 
   return (
-    <div className="App">
-      <Header/>
-      <Home/>
-        
-    </div>
-  )
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <Header />
+        <Routes />
+      </ApolloProvider>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
