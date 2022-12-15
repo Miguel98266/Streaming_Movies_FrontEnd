@@ -12,7 +12,6 @@ function App() {
   return (
     <BrowserRouter>
       <ApolloProvider client={client}>
-        <Header />
         <Routes />
       </ApolloProvider>
     </BrowserRouter>

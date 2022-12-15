@@ -1,15 +1,18 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
+import { SharedLayout } from "../pages/SharedLayout";
 import { DetailMovie } from "../pages/DetailMovie";
 const MainRoutes = () => {
   return (
     <Routes>
+      <Route path="movies" element={<SharedLayout />}>
+        <Route index element={<Home />} />
+        <Route path=":movieId" element={<DetailMovie />} />
+      </Route>
       <Route index element={<Login />}></Route>
-      <Route path="/home" element={<Home />}></Route>
-      <Route path="/detail-movie" element={<DetailMovie />}></Route>
     </Routes>
   );
 };
 
-export default MainRoutes
+export default MainRoutes;

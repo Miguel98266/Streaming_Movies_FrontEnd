@@ -19,22 +19,32 @@ export const GET_MOVIES = gql`
     }
   }
 `;
-export const GET_MOVIESBYID = gql`
+export const GET_MOVIEBYID = gql`
   query getMovieById($_id: ID) {
-  getMovieById(_id: $_id) {
-    _id
-    title
-    description
-    image
-    dateRelease
-    rate{
-      user{
-        name
-      }
-      rate
+    getMovieById(_id: $_id) {
+      _id
+      title
       description
-      date
+      image
+      dateRelease
+      rate {
+        user {
+          name
+        }
+        rate
+        description
+        date
+      }
     }
   }
-}
+`;
+
+export const LOGIN = gql`
+  query login($email: String, $password: String) {
+    login(email: $email, password: $password) {
+      isValid
+      msg
+      token
+    }
+  }
 `;
