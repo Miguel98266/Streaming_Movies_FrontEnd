@@ -10,10 +10,10 @@ export const Header = () => {
   const verifyLocation= ()=>{
     if (location.pathname==='/') {
       setIsShow(false)
-      console.log(isShow)
+      
     }else{
       setIsShow(true)
-      console.log(isShow)
+      
     }
   }
   useEffect(() => {
