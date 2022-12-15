@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { GET_MOVIEBYID } from "../graphql/Queries";
 import { useLazyQuery } from "@apollo/client";
 import { Rate } from "../components/Rate";
-import './DetailMovie.css'
+import { FormReview } from "../components/FormReview";
 
 export const DetailMovie = () => {
   useEffect(() => {
@@ -53,15 +53,15 @@ export const DetailMovie = () => {
                     {data.getMovieById.rate.length} Reviews{" "}
                   </h3>
                 </div>
-                <h3 className="text-white my-5">
+                <p className="text-white my-3">
                   {data.getMovieById.description}
-                </h3>
-                <h3 className="text-white">
-                  Realease Date:{" "}
-                  {new Date(data.getMovieById.dateRelease).getFullYear() +
+                </p>
+                <p className="text-white fw-bold">
+                  Realease Date:{" "} <span className="fw-normal"> {new Date(data.getMovieById.dateRelease).getFullYear() +
                     "-" +
-                    new Date(data.getMovieById.dateRelease).getMonth()}
-                </h3>
+                    new Date(data.getMovieById.dateRelease).getMonth()}</span>
+                 
+                </p>
               </div>
             </>
           )
@@ -93,35 +93,7 @@ export const DetailMovie = () => {
               <h1 className="text-white text-capitalize">No hay nada</h1>
             )}
           </ol>
-          <form className="container bg-white rounded mt-4">
-            <div className="mb-3">
-              <label htmlFor="exampleInputEmail1" className="form-label ">
-              Rating
-              </label>
-              
-            <div className="rating"> 
-                <input type="radio" name="rating" value="5" id="5"/><label htmlFor="5">☆</label> 
-                <input type="radio" name="rating" value="4" id="4"/><label htmlFor="4">☆</label> 
-                <input type="radio" name="rating" value="3" id="3"/><label htmlFor="3">☆</label> 
-                <input type="radio" name="rating" value="2" id="2"/><label htmlFor="2">☆</label> 
-                <input type="radio" name="rating" value="1" id="1"/><label htmlFor="1">☆</label>
-            </div>
-             
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleInputPassword1" className="form-label">
-               Review
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="exampleInputPassword1"
-              />
-            </div>
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </form>
+          <FormReview/>
         </div>
       </div>
     </div>

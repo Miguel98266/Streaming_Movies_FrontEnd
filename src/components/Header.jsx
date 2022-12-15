@@ -1,8 +1,11 @@
 import './header.css'
 import { useLocation } from 'react-router-dom'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/Auth';
+
 export const Header = () => {
+  const { isAuth, logout,user } = useContext(AuthContext);
   const [isShow, setIsShow] = useState(true)
   let location = useLocation();
   
@@ -50,19 +53,21 @@ export const Header = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/movies/createMovie">
                   New Movie
-                </a>
+                </Link>
               </li>
             </ul>
-            <p className="my-2 my-lg-0 text-white">
-              Welcome, Name
+            {isAuth && <p className="my-2 my-lg-0 text-white">
+              Welcome, {user.name}
             </p>
+            }
+            
             <ul className="navbar-nav  my-2 my-lg-0 navbar-nav-scroll">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <Link className="nav-link active" aria-current="page" to="/" onClick={logout}>
                   Sign out
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

@@ -7,3 +7,15 @@
   text-decoration: none;
 }
 
+.cut-text { 
+  text-overflow: ellipsis;
+  overflow: hidden; 
+  /* height: 20px;  */
+  white-space: nowrap;
+}
+.cut-p { 
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}

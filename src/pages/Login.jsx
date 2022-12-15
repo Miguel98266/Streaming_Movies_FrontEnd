@@ -15,27 +15,26 @@ export const Login = () => {
     const { data } = await loginQuery({
       variables: { email, password },
     });
-
+    console.log(isValid);
     if (data) {
-      if (data.login) {
+      if (data.login.isValid) {
         loginUser(data.login.token);
         navigate("/movies");
-      } else if (data.login == null) {
+      } else if (data.login == null || !data.login.isValid) {
         setIsValid(true);
-        setLogin({
-          email: "",
-          password: "",
-        });
+        setTimeout(() => {
+          setIsValid(false);
+        }, 3000);
       }
     }
   };
   const { input, handleInputChange, handleSubmit } = useForm(onVerifyUser, {
     email: "",
-    passwordbody: "",
+    password: "",
   });
-  const {email,passwordbody}=input
+  const { email, password } = input;
   const [loginQuery, { data, error }] = useLazyQuery(LOGIN, {
-    variables: { email, passwordbody },
+    variables: { email, password },
   });
   return (
     <div className="wrapper">
@@ -51,8 +50,14 @@ export const Login = () => {
       </div>
       <div className="login__form">
         <div className="login__box">
-          <h2>Inicia sesión</h2>
-          <form>
+          <h2>Sign In</h2>
+          {isValid && (
+              <div className="alert alert-danger " role="alert">
+                Sorry, we can't find an account with this email address. Please
+                try again or  <Link to="#">create a new account</Link>
+              </div>
+            )}
+          <form onSubmit={onVerifyUser}>
             <div className="input__wrap">
               <input
                 type="text"
@@ -64,40 +69,36 @@ export const Login = () => {
             </div>
             <div className="input__wrap">
               <input
-                type="text"
-                placeholder="Contraseña"
-                name="passwordbody"
-                value={passwordbody}
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={password}
                 onChange={(e) => handleInputChange(e)}
               />
             </div>
             <div className="input__wrap">
-              <button onClick={handleSubmit}>
-                Inicia sesión
-              </button>
+              <button type="submit">Sign In</button>
             </div>
-            {isValid && (
-              <h3 className="text-red-500 mb-2">Invalid Credencials!!</h3>
-            )}
+            
             <div className="support">
               <div className="remember">
                 <span>
                   <input type="checkbox" />
                 </span>
-                <span>Recuérdame</span>
+                <span>Remember me</span>
               </div>
-              <div className="need_help">¿Necesitas ayuda?</div>
+              <div className="need_help">Need Help?</div>
             </div>
             <div className="login__footer">
               <div className="sign__up">
-                <p>¿Primera vez en Netflix? </p>
-                <Link href="#">Suscríbete ahora.</Link>
+                <p>¿New to Netflix? </p>
+                <Link to="#">Sign up now</Link>
               </div>
             </div>
             <div className="terms">
               <p>
-                Esta página está protegida por Google reCAPTCHA para comprobar
-                que no eres un robot. <Link to="#">Más info.</Link>
+                This page is protected by Google reCAPTCHA to ensure you're not
+                a bot. <Link to="#">Learn more.</Link>
               </p>
             </div>
           </form>
