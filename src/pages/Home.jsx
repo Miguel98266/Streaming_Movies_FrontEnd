@@ -14,13 +14,14 @@ export const Home = () => {
     <div className="container mt-4">
       <div className="row row-cols-2 row-cols-md-4 g-4">
         {data &&
-          data.getMovies.map(({ _id, title, description, image }) => (
+          data.getMovies.map(({ _id, title, description, image,rate }) => (
             <Card
               key={_id}
               _id={_id}
               title={title}
               description={description}
               image={image}
+              rating={rate}
             />
           ))}
       </div>

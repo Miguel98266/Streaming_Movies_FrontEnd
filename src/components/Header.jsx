@@ -1,11 +1,13 @@
 import './header.css'
 import { useLocation } from 'react-router-dom'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/Auth';
 
 export const Header = () => {
+  const { isAuth, logout,user } = useContext(AuthContext);
   const [isShow, setIsShow] = useState(true)
   let location = useLocation();
-  console.log(location.pathname);
   
   const verifyLocation= ()=>{
     if (location.pathname==='/') {
@@ -24,14 +26,14 @@ export const Header = () => {
   return  isShow &&  
         <nav className="navbar navbar-expand-lg navbar-dark">
         <div className="container-fluid mx-5">
-          <a className="navbar-brand" href="#">
+          <Link className="navbar-brand" to="/movies">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/1280px-Netflix_2015_logo.svg.png"
               height="30"
               alt=""
               loading="lazy"
             />
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -46,24 +48,26 @@ export const Header = () => {
           <div className="collapse navbar-collapse" id="navbarScroll">
             <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <Link to='/movies' className="nav-link active" aria-current="page" href="#">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/movies/createMovie">
                   New Movie
-                </a>
+                </Link>
               </li>
             </ul>
-            <p className="my-2 my-lg-0 text-white">
-              Welcome, Name
+            {isAuth && <p className="my-2 my-lg-0 text-white">
+              Welcome, {user.name}
             </p>
+            }
+            
             <ul className="navbar-nav  my-2 my-lg-0 navbar-nav-scroll">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <Link className="nav-link active" aria-current="page" to="/" onClick={logout}>
                   Sign out
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
